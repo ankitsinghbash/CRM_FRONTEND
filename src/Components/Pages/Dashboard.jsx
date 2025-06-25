@@ -82,12 +82,12 @@ const menuItems = useMemo(() => [
   const hasFetchedToDo = useRef(false);
 
   const endpoints = {
-    todoFully: 'http://localhost:8000/alphaselector/api/tos/pos/gateway/fullypaid',
-    todoPartially: 'http://localhost:8000/alphaselector/api/tos/pos/gateway/partiallypaid',
-    todoCibil: 'http://localhost:8000/alphaselector/api/tos/pos/gateway/cibilcleanup',
-    todoSettlement: 'http://localhost:8000/alphaselector/api/tos/pos/gateway/settlement',
-    getamount : 'http://localhost:8000/alphaselector/api/payment/getamount/',
-    callback_promisespay : 'http://localhost:8000/searchapp/api/header/callback_promisespay'
+    todoFully: 'https://crm-backend-msk3.onrender.com/alphaselector/api/tos/pos/gateway/fullypaid',
+    todoPartially: 'https://crm-backend-msk3.onrender.com/alphaselector/api/tos/pos/gateway/partiallypaid',
+    todoCibil: 'https://crm-backend-msk3.onrender.com/alphaselector/api/tos/pos/gateway/cibilcleanup',
+    todoSettlement: 'https://crm-backend-msk3.onrender.com/alphaselector/api/tos/pos/gateway/settlement',
+    getamount : 'https://crm-backend-msk3.onrender.com/alphaselector/api/payment/getamount/',
+    callback_promisespay : 'https://crm-backend-msk3.onrender.com/searchapp/api/header/callback_promisespay'
   };
 
 

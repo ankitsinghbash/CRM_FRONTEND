@@ -19,8 +19,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 
-
-
 const Login = ({setMasterLogin}) => {
  
     const [openState,setOpenState] =  useState(false);
@@ -32,7 +30,7 @@ const Login = ({setMasterLogin}) => {
     const handlePassword = async()=>{
            setOpenState(!openState);
            console.log("User State is ",openState);
-    }
+    } 
 
 
      const navigate = useNavigate();
@@ -40,34 +38,40 @@ const Login = ({setMasterLogin}) => {
     const handlesubmit = async()=>{
             console.log("form data",formData);
             try{
-                const response = await axios.post('http://localhost:8000/api/v8/master/',formData,{withCredentials : true}); 
+                const response = await axios.post('https://crm-backend-msk3.onrender.com/api/v8/master/',formData,{withCredentials : true}); 
+                console.log("respnose data",response);
+                if(response.data.success && response.data.istwostepenable){
+                           console.log("Come Inside this ");
+                           localStorage.setItem('userIdPending',response.data.userId);
+                           navigate('/master/login/otp'); 
+                           console.log("after");
+                }
+                else{
                 setMasterLogin(true);
                 localStorage.setItem("masterlogin",true);
+                
                 navigate(
-  '/master/system/dashboard',
-  {
-    state: { toastMessage: "Login successful!" }
-  }
-);
-
+                           '/master/system/dashboard',
+                         {
+                              state: { toastMessage: "Login successful!" }
+                         }
+                    );
+                } 
             }
             catch(err){
                 setMasterLogin(false);
                 if(err.response && err.response.data){
-                     toast.error(`${err.response.data.message}`)
+                     toast.error(`${err.response.data.message}`);
                     console.log("Error in backend",err.response.data.message);
                 }
-                else{
-                     console.log("Login Error Unknown");
-                }
+               
             }
-           
     }
 
 
   return (
     // <div className="h-screen bg-[#562a2a] flex items-center justify-center"> {/* Darker blue background */}
-      <div className="bg-[#0e0e0f] rounded-xl shadow-2xl overflow-hidden w-full  flex flex-col md:flex-row relative"> {/* Main card background */}
+      <div className="bg-[#0e0e0f] h-screen rounded-xl shadow-2xl overflow-hidden w-full  flex flex-col md:flex-row relative"> {/* Main card background */}
         
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
           
@@ -151,9 +155,9 @@ const Login = ({setMasterLogin}) => {
         <Button onClick={handlesubmit} className="w-full">
           Login
         </Button>
-        <Button variant="outline" className="w-full text-black">
+        {/* <Button variant="outline" className="w-full text-black">
           Login with Google
-        </Button>
+        </Button> */}
       </CardFooter>
     </Card>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useContext } from 'react';
 import Header from './Components/Pages/Header';
 import Dashboard from './Components/Pages/Dashboard';
 import { Routes, Route, Navigate, BrowserRouter, useLocation } from 'react-router-dom';  
@@ -9,7 +9,10 @@ import Signup from './Components/Login/signup';
 import Senior_Header from './Components/Senior_Page/Senior_Header';
 import SeniorDashboard from './Components/Senior_Page/SeniorDashboard';
 import MasterLogin from './Components/Master_Page/Login'
-import Master_DashBoard from './Components/Master_Page/Master_DashBoard';
+import MasterHeader from './Components/Master_Page/MasterHeader';
+import {OtpVerify} from './Components/Master_Page/Services/OtpVerify';
+import { ThemeContext } from './../src/Components/Master_Page/Contextapi/ThemeProvider'
+
 function LayoutWrapper({
   isDarkMode,
   setIsDarkMode,
@@ -32,7 +35,10 @@ function LayoutWrapper({
   searchParams,     
   setSearchParams,    
   setMasterLogin,
-  masterlogin
+  masterlogin,
+  theme,
+  toggleTheme
+
 }) {
      
     const location = useLocation();
@@ -45,6 +51,10 @@ function LayoutWrapper({
 
 
   const shouldHideFooter = ['/home','/test'  , ['/persona/']].some(item => location.pathname.startsWith(item));
+
+
+
+
 
   return (
    
@@ -143,10 +153,8 @@ function LayoutWrapper({
   />
 
         <Route path="/masterdashboard" element={<MasterLogin setMasterLogin={setMasterLogin}/>}/>
-        <Route path="/master/system/dashboard" element={<ProtectedRoute_Master masterlogin={masterlogin} element={<Master_DashBoard/>}/>}/>
-
-
-
+        <Route path="/master/system/dashboard" element={<ProtectedRoute_Master masterlogin={masterlogin}  element={<MasterHeader theme={theme} toggleTheme={toggleTheme}/>}/>}/>
+        <Route path="/master/login/otp" element={<OtpVerify  setMasterLogin={setMasterLogin}/>}/>       
         </Routes>
       </div>
    
@@ -175,6 +183,12 @@ function App() {
   const getmastersessionstate = localStorage.getItem('masterlogin');
   const [masterlogin,setMasterLogin] = useState(!!getmastersessionstate);
 
+
+   const { theme, toggleTheme } = useContext(ThemeContext);  //for master;
+
+
+
+
  
 
   // Consolidated search parameters state
@@ -193,7 +207,7 @@ function App() {
 
   const handleSearch = async (token) => {
     try {
-      const res = await axios.get("http://localhost:8000/searchapp/getUserData", {
+      const res = await axios.get("https://crm-backend-msk3.onrender.com/searchapp/getUserData", {
         params: {
           Name_query: searchParams.fullName,
           Account_Number_query: searchParams.acNumber,
@@ -239,6 +253,28 @@ function App() {
    
   };
 
+
+
+
+  
+  //Denie Access when Devloper Tool is get open:
+//   useEffect(()=>{
+//     const id =  setInterval(() => {
+//   if (
+//     window.outerHeight - window.innerHeight > 160 ||
+//     window.outerWidth - window.innerWidth > 160
+//   ) {
+//     document.body.innerHTML = "<h1>Access Blocked</h1>";
+//   }
+// }, 1000);
+
+
+// return ()=>{
+//       clearInterval(id);
+// };
+
+//   },[]);
+
   return (
     <BrowserRouter basename='/'>
           <LayoutWrapper
@@ -265,6 +301,8 @@ function App() {
       setSearchParams={setSearchParams}
       setMasterLogin={setMasterLogin}
       masterlogin={masterlogin}
+      toggleTheme ={toggleTheme}   //for master dark mode;
+      theme={theme}    //for master dark mode:
     />
     </BrowserRouter>
    

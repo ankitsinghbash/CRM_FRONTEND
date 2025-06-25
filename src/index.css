@@ -121,3 +121,42 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+
+.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+
+.comfortable {
+  background-color: white; /* Soft cream */
+  color: #2f2f2f;            /* Dark gray text */
+}
+
+.compact {
+  background-color: #e0e0e0; /* Light gray */
+  color: #1a1a1a;            /* Deep charcoal */
+}
+
+
+.spacious {
+  background-color: #e7f6f2; /* Airy teal-blue */
+  color: #0d3b3e;            /* Deep cool tone */
+}
+
+
+
+
+
+
+
+
+.dark {
+  background-color: #111827; /* bg-gray-900 */
+  color: #f3f4f6;            /* text-gray-100 */
+}
+
+
