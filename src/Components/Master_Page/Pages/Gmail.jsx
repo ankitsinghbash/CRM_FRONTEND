@@ -173,6 +173,7 @@ const [employees , setEmployee] = useState([]);
           const response = await axios.post('https://crm-backend-msk3.onrender.com/api/v8/sendmail',{composeEmail});
           toast.success("Send Mail Successfully to ",composeEmail.to);
 
+          
            setEmailSendLoading(false);
 
           if(response.data.success){
