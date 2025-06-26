@@ -31,11 +31,12 @@ export function OtpVerify({setMasterLogin}) {
       withCredentials: true
     }
   );
-
+    
+    88
   if (response.data.success) {
     setMasterLogin(true);
     localStorage.setItem("masterlogin", true);
-    navigate('/master/system/dashboard');
+    navigate('/master/system/dashboard', {replace : true});
     // Optionally navigate to dashboard
   } 
 } catch (err) {

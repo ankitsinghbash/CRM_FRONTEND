@@ -169,11 +169,6 @@ const [employees , setEmployee] = useState([]);
 
 
     console.log("full data is",composeEmail);
-
-    
-   
-
-
     try{
           const response = await axios.post('https://crm-backend-msk3.onrender.com/api/v8/sendmail',{composeEmail});
           toast.success("Send Mail Successfully to ",composeEmail.to);
